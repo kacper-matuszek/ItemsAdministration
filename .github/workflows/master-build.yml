@@ -23,6 +23,11 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
           include-prerelease: true
+      - name: Create manifest
+        uses: actions/setup-dotnet@v1.7.2
+        with: 
+          dotnet-version: ['6.0.x']
+        run: dotnet new tool-manifest --force
       - name: Run the build script
         shell: pwsh
         run: .\build.ps1
