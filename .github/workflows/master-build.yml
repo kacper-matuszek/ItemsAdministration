@@ -24,8 +24,6 @@ jobs:
           dotnet-version: ${{ matrix.dotnet-version }}
           include-prerelease: true
       - name: Create manifest
-        with: 
-          dotnet-version: ['6.0.x']
         run: dotnet new tool-manifest --force
       - name: Run the build script
         shell: pwsh
