@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using ItemsAdministration.Common.Application.Interfaces.Repositories;
 using ItemsAdministration.Common.Domain.Models.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace ItemsAdministration.Common.Infrastructure.EF.Repositories;
 
-public abstract class BaseIdentifiableRepository<TEntity, TId, TContext>
+public abstract class BaseIdentifiableRepository<TEntity, TId, TContext> : IBaseIdentifiableRepository<TEntity, TId> 
     where TEntity : class, IIdentifiable<TId>
     where TId : notnull
     where TContext : DbContext
