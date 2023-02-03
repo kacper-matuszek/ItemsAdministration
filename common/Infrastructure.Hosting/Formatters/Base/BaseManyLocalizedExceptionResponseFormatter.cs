@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace ItemsAdministration.Common.Infrastructure.Hosting.Formatters.Base;
 
-internal class ManyLocalizedExceptionResponseFormatter<TException> : ExceptionResponseFormatter<TException>
+internal class BaseManyLocalizedExceptionResponseFormatter<TException> : BaseExceptionResponseFormatter<TException>
     where TException : BaseManyLocalizedException
 {
-    protected ManyLocalizedExceptionResponseFormatter(
-        ILogger<ManyLocalizedExceptionResponseFormatter<TException>> logger,
+    protected BaseManyLocalizedExceptionResponseFormatter(
+        ILogger<BaseManyLocalizedExceptionResponseFormatter<TException>> logger,
         ILocalizationService localizationService)
     : base(logger, localizationService)
     {

@@ -1,4 +1,5 @@
 ﻿using ItemsAdministration.Common.Infrastructure.Hosting.Descriptions;
+using ItemsAdministration.Common.Infrastructure.Hosting.Formatters.Interfaces;
 using ItemsAdministration.Common.Infrastructure.Hosting.Localizations.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
@@ -11,16 +12,16 @@ using System.Threading.Tasks;
 
 namespace ItemsAdministration.Common.Infrastructure.Hosting.Formatters.Base;
 
-internal abstract class ExceptionResponseFormatter<TException>
+internal abstract class BaseExceptionResponseFormatter<TException> : IExceptionResponseFormatter
     where TException : Exception
 {
-    protected ExceptionResponseFormatter(ILogger<ExceptionResponseFormatter<TException>> logger, ILocalizationService localizationService)
+    protected BaseExceptionResponseFormatter(ILogger<BaseExceptionResponseFormatter<TException>> logger, ILocalizationService localizationService)
     {
         Logger = logger;
         LocalizationService = localizationService;
     }
 
-    protected ILogger<ExceptionResponseFormatter<TException>> Logger { get; }
+    protected ILogger<BaseExceptionResponseFormatter<TException>> Logger { get; }
     protected ILocalizationService LocalizationService { get; }
 
     public async Task Format(HttpContext context, Stream stream, Exception exception)

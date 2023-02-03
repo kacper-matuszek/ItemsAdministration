@@ -17,11 +17,20 @@ using ItemsAdministration.Common.Infrastructure.Readers;
 using Microsoft.Extensions.Localization;
 using ItemsAdministration.Common.Infrastructure.Hosting.Localizations;
 using ItemsAdministration.Common.Infrastructure.Hosting.Localizations.Interfaces;
+using ItemsAdministration.Common.Infrastructure.Hosting.Formatters.Interfaces;
+using ItemsAdministration.Common.Infrastructure.Hosting.Formatters;
 
 namespace ItemsAdministration.Common.Infrastructure.Hosting.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    public static IServiceCollection AddExceptionHandling(this IServiceCollection services)
+    {
+        services.AddScoped<IExceptionResponseFormatterFactory, ExceptionResponseFormatterFactory>();
+
+        return services;
+    }
+
     public static IServiceCollection AddLocalization(this IServiceCollection services)
     {
         services.AddScoped<IDictionaryJsonFileReader, DictionaryJsonFileReader>();

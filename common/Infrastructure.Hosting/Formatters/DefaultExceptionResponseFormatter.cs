@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace ItemsAdministration.Common.Infrastructure.Hosting.Formatters;
 
-internal sealed class DefaultExceptionResponseFormatter : ExceptionResponseFormatter<Exception>
+internal sealed class DefaultExceptionResponseFormatter : BaseExceptionResponseFormatter<Exception>
 {
     private const string DefaultExceptionMessage = "An unexpected error occurred. Please contact system help desk.";
 
