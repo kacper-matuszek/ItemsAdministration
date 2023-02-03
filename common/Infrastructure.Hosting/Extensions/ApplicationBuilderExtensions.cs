@@ -1,4 +1,5 @@
 ﻿using System;
+using ItemsAdministration.Common.Infrastructure.Hosting.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +9,9 @@ namespace ItemsAdministration.Common.Infrastructure.Hosting.Extensions;
 
 public static class ApplicationBuilderExtensions
 {
+    public static IApplicationBuilder UseExceptionHandling(this IApplicationBuilder applicationBuilder) =>
+        applicationBuilder.UseMiddleware<ExceptionResponseMiddleware>();
+
     public static IApplicationBuilder UseDatabaseAutoMigration<TEfContext>(this IApplicationBuilder applicationBuilder)
         where TEfContext : DbContext
     {
