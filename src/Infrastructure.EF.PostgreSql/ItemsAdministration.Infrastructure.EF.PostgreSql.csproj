@@ -5,6 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\common\Infrastructure.EF\ItemsAdministration.Common.Infrastructure.EF.csproj" />
     <ProjectReference Include="..\Application.Abstractions\ItemsAdministration.Application.Abstractions.csproj" />
   </ItemGroup>
 

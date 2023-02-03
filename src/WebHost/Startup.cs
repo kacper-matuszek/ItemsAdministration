@@ -2,7 +2,9 @@
 using ItemsAdministration.Application;
 using ItemsAdministration.Application.Abstractions;
 using ItemsAdministration.Common.Infrastructure.Hosting;
+using ItemsAdministration.Common.Infrastructure.Hosting.Extensions;
 using ItemsAdministration.Infrastructure.Api;
+using ItemsAdministration.Infrastructure.EF.PostgreSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,15 +24,13 @@ public class Startup : BaseStartup
     protected override void ConfigureServices(IServiceCollection services)
     {
         base.ConfigureServices(services);
-        //TODO: adjust
-        //services.AddPostgres<>()
+        services.AddPostgres<ItemsAdministrationDbContext>(Configuration);
 
     }
 
     protected override void ConfigureApplication(WebApplication app)
     {
         base.ConfigureApplication(app);
-        //TODO:
-        //service.UseDatabaseAutoMigration
+        app.UseDatabaseAutoMigration<ItemsAdministrationDbContext>();
     }
 }
