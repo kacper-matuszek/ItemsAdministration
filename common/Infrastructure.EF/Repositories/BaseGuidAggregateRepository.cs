@@ -1,5 +1,5 @@
 ﻿using System;
-using ItemsAdministration.Common.Application.Interfaces.Repositories;
+using ItemsAdministration.Common.Application.Abstractions.Interfaces.Repositories;
 using ItemsAdministration.Common.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 

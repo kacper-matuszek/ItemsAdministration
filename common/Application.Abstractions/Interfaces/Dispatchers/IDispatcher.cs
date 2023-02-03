@@ -1,9 +1,9 @@
-﻿using ItemsAdministration.Common.Application.Interfaces.Commands;
-using ItemsAdministration.Common.Application.Interfaces.Queries;
+﻿using ItemsAdministration.Common.Application.Abstractions.Interfaces.Commands;
+using ItemsAdministration.Common.Application.Abstractions.Interfaces.Queries;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ItemsAdministration.Common.Application.Interfaces.Dispatchers;
+namespace ItemsAdministration.Common.Application.Abstractions.Interfaces.Dispatchers;
 
 public interface IDispatcher
 {

@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ItemsAdministration.Common.Domain.Models.Interfaces;
 
-namespace ItemsAdministration.Common.Application.Interfaces.Repositories;
+namespace ItemsAdministration.Common.Application.Abstractions.Interfaces.Repositories;
 
 public interface IBaseIdentifiableRepository<TEntity, TId>
     where TEntity : class, IIdentifiable<TId>
