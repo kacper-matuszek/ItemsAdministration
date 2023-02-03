@@ -7,7 +7,7 @@ using System.IO;
 
 namespace ItemsAdministration.Common.Infrastructure.Hosting.Localizations;
 
-internal sealed class JsonStringLocalizerFactory : IStringLocalizerFactory
+public sealed class JsonStringLocalizerFactory : IStringLocalizerFactory
 {
     private readonly ConcurrentDictionary<string, JsonStringLocalizer> _localizerCache =
         new ConcurrentDictionary<string, JsonStringLocalizer>();
@@ -21,10 +21,8 @@ internal sealed class JsonStringLocalizerFactory : IStringLocalizerFactory
         _jsonReader = jsonReader;
     }
 
-    public IStringLocalizer Create(Type resourceSource)
-    {
-        return Create(resourceSource.FullName!, string.Empty);
-    }
+    public IStringLocalizer Create(Type resourceSource) => 
+        Create(resourceSource.FullName!, string.Empty);
 
     public IStringLocalizer Create(string baseName, string location)
     {
@@ -35,6 +33,7 @@ internal sealed class JsonStringLocalizerFactory : IStringLocalizerFactory
 
     private string GetResourcePrefix(string baseName, string location) =>
         Path.Combine(location, _resourcesPath, baseName);
+
     private JsonStringLocalizer CreateJsonStringLocalizer(string baseName) =>
         new JsonStringLocalizer(baseName, _jsonReader);
 }

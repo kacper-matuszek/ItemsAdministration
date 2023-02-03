@@ -1,8 +1,7 @@
+using ItemsAdministration.WebHost;
 using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
-
-app.MapGet("/", () => "Hello World!");
-
+var startup = new Startup(builder);
+var app = startup.Initialize();
 app.Run();

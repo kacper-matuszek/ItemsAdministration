@@ -7,7 +7,7 @@ public static class ConfigurationBuilderExtensions
 {
     private const string ConfigurationDir = "Configurations";
 
-    public static IConfigurationBuilder AddConfiguration(this IConfigurationBuilder builder)
+    internal static IConfigurationBuilder AddConfiguration(this IConfigurationBuilder builder)
     {
         var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 

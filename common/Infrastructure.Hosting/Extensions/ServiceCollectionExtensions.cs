@@ -26,16 +26,15 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddExceptionHandling(this IServiceCollection services)
     {
-        services.AddScoped<IExceptionResponseFormatterFactory, ExceptionResponseFormatterFactory>();
+        services.AddSingleton<IExceptionResponseFormatterFactory, ExceptionResponseFormatterFactory>();
 
         return services;
     }
 
-    public static IServiceCollection AddLocalization(this IServiceCollection services)
+    public static IServiceCollection AddCommonLocalization(this IServiceCollection services)
     {
-        services.AddScoped<IDictionaryJsonFileReader, DictionaryJsonFileReader>();
-        services.AddScoped<IStringLocalizerFactory, JsonStringLocalizerFactory>();
-        services.AddSingleton<IStringLocalizer, JsonStringLocalizer>();
+        services.AddTransient<IDictionaryJsonFileReader, DictionaryJsonFileReader>();
+        services.AddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
         services.AddSingleton(sp =>
         {
             const string resourcesDir = "Resources";

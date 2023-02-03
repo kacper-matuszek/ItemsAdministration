@@ -74,9 +74,6 @@ internal sealed class JsonStringLocalizer : IStringLocalizer
             .ToArray();
     }
 
-    public IStringLocalizer WithCulture(CultureInfo culture) =>
-        new JsonStringLocalizer(_baseName, _reader, culture);
-
     private IReadOnlyDictionary<string, JsonElement> GetCultureResource(CultureInfo culture, bool includeParentCultures)
     {
         return _culturesCache.GetOrAdd(culture.Name, _ =>

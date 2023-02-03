@@ -4,7 +4,7 @@ namespace ItemsAdministration.Common.Infrastructure.Hosting.Extensions;
 
 public static class DbContextOptionsBuilderExtensions
 {
-    public static DbContextOptionsBuilder ApplyPostgresOptions<TContext>(
+    internal static DbContextOptionsBuilder ApplyPostgresOptions<TContext>(
         this DbContextOptionsBuilder builder,
         string connectionString)
         where TContext : DbContext =>

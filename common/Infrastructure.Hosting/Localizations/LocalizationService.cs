@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace ItemsAdministration.Common.Infrastructure.Hosting.Localizations;
 
-internal sealed class LocalizationService : ILocalizationService
+public sealed class LocalizationService : ILocalizationService
 {
     private const string DefaultCulture = "en-US";
 

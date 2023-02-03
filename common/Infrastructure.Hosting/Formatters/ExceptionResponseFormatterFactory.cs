@@ -10,10 +10,8 @@ public sealed class ExceptionResponseFormatterFactory : IExceptionResponseFormat
 {
     private readonly IServiceProvider _provider;
 
-    public ExceptionResponseFormatterFactory(IServiceProvider provider)
-    {
+    public ExceptionResponseFormatterFactory(IServiceProvider provider) =>
         _provider = provider;
-    }
 
     public IExceptionResponseFormatter Create(Exception exception)
       => exception switch

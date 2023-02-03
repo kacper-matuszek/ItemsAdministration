@@ -7,11 +7,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\common\Infrastructure.Hosting\ItemsAdministration.Common.Infrastructure.Hosting.csproj" />
     <ProjectReference Include="..\Application\ItemsAdministration.Application.csproj" />
     <ProjectReference Include="..\Infrastructure.Api\ItemsAdministration.Infrastructure.Api.csproj" />
     <ProjectReference Include="..\Infrastructure.ContextIntegration\ItemsAdministration.Infrastructure.ContextIntegration.csproj" />
     <ProjectReference Include="..\Infrastructure.EF.PostgreSql\ItemsAdministration.Infrastructure.EF.PostgreSql.csproj" />
     <ProjectReference Include="..\Infrastructure.ReadModel\ItemsAdministration.Infrastructure.ReadModel.csproj" />
   </ItemGroup>
-
 </Project>

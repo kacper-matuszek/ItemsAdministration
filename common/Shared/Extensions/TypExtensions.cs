@@ -7,7 +7,7 @@ namespace ItemsAdministration.Common.Shared.Extensions;
 public static class TypExtensions
 {
     public static Type[] GetTypesBasedOnAttribute<TAttribute>(this Assembly assembly)
-    where TAttribute : Attribute =>
+        where TAttribute : Attribute =>
     assembly
         .GetTypes()
         .Where(t => t.IsDefined(typeof(TAttribute), inherit: false))
