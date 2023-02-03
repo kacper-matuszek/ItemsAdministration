@@ -27,7 +27,6 @@ public class Item : BaseGuidAggregate
         Persist(dto);
     }
 
-
     private void Persist(IPersistItemDto dto)
     {
         Code = dto.Code;
