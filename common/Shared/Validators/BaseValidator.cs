@@ -9,9 +9,9 @@ public abstract class BaseValidator<T> : AbstractValidator<T>
 {
     protected const string PredicateValidatorCode = "PredicateValidator";
 
-    protected bool IsValid(T candidate, out ValidationResultException[] exceptions)
+    protected bool IsValid(T candidate, out ValidationResultError[] exceptions)
     {
-        exceptions = Array.Empty<ValidationResultException>();
+        exceptions = Array.Empty<ValidationResultError>();
         var validationResult = Validate(candidate);
 
         if (validationResult.IsValid)
@@ -21,7 +21,7 @@ public abstract class BaseValidator<T> : AbstractValidator<T>
 
         exceptions = validationResult.Errors
             .Where(e => !e.ErrorCode.Equals(PredicateValidatorCode))
-            .Select(e => new ValidationResultException(e.ErrorCode, e.CustomState))
+            .Select(e => new ValidationResultError(e.ErrorCode, e.CustomState))
             .ToArray();
 
         return false;
