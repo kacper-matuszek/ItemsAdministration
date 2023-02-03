@@ -10,4 +10,5 @@ public class ItemsAdministrationDbContext : BaseDbContext
         : base(options) { }
 
     public DbSet<Item> Items { get; set; } = null!;
+    public DbSet<Color> Colors { get; set; } = null!;
 }
