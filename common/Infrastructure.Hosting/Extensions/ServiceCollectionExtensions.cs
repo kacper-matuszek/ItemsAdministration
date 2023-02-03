@@ -10,11 +10,43 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
 using ItemsAdministration.Common.Shared.Extensions;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using ItemsAdministration.Common.Infrastructure.Readers.Interfaces;
+using ItemsAdministration.Common.Infrastructure.Readers;
+using Microsoft.Extensions.Localization;
+using ItemsAdministration.Common.Infrastructure.Hosting.Localizations;
+using ItemsAdministration.Common.Infrastructure.Hosting.Localizations.Interfaces;
 
 namespace ItemsAdministration.Common.Infrastructure.Hosting.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    public static IServiceCollection AddLocalization(this IServiceCollection services)
+    {
+        services.AddScoped<IDictionaryJsonFileReader, DictionaryJsonFileReader>();
+        services.AddScoped<IStringLocalizerFactory, JsonStringLocalizerFactory>();
+        services.AddSingleton<IStringLocalizer, JsonStringLocalizer>();
+        services.AddSingleton(sp =>
+        {
+            const string resourcesDir = "Resources";
+
+            var env = sp.GetRequiredService<IWebHostEnvironment>();
+            return Microsoft.Extensions.Options.Options.Create(new JsonReaderOptions(Path.Combine(env.ContentRootPath, resourcesDir)));
+        });
+        services.AddSingleton<ILocalizationService>(sp =>
+        {
+            const string messagesFileName = "messages";
+
+            var localizerFactory = sp.GetRequiredService<IStringLocalizerFactory>();
+            var localizer = localizerFactory.Create(messagesFileName, string.Empty);
+
+            return new LocalizationService(localizer);
+        });
+
+        return services;
+    }
+
     public static IServiceCollection AddCqrs(this IServiceCollection services, Assembly[] assemblies)
     {
         const string appAssemblySuffix = "Application";

@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using ItemsAdministration.Common.Infrastructure.Hosting.Localizations.Interfaces;
+using Microsoft.Extensions.Localization;
 using System.Globalization;
 
 namespace ItemsAdministration.Common.Infrastructure.Hosting.Localizations;
 
-internal sealed class LocalizationService
+internal sealed class LocalizationService : ILocalizationService
 {
     private const string DefaultCulture = "en-US";
 
