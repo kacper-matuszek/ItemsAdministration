@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MediatR;
+using ItemsAdministration.Common.Shared.Extensions;
 
 namespace ItemsAdministration.Common.Infrastructure.Hosting.Extensions;
 
