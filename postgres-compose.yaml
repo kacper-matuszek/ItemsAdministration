@@ -11,8 +11,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - postgre_config:/etc/postgresql.conf
-      - postgre_persistence:/var/lib/postgresql
+      - postgres:/var/lib/postgresql/data
   pgadmin:
     container_name: pgadmin_container
     image: dpage/pgadmin4
@@ -23,7 +22,5 @@ services:
     ports:
       - "5050:80"
 volumes:
-  postgre_persistence:
-    external: true
-  postgre_config:
-    external: true
+  postgres:
+    driver: local
