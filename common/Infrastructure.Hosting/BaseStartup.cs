@@ -58,6 +58,7 @@ public abstract class BaseStartup
         services.AddCommonLocalization();
         services.AddExceptionHandling();
         services.AddCqrs(new[] { ApplicationLayerAssembly, ApplicationAbstractionLayerAssembly });
+        services.AddMapper(new[] { ApiLayerAssembly });
     }
 
     protected virtual void ConfigureApplication(WebApplication app)

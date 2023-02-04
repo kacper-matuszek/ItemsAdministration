@@ -12,6 +12,7 @@ using MediatR;
 using ItemsAdministration.Common.Shared.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using AutoMapper;
 using ItemsAdministration.Common.Infrastructure.Readers.Interfaces;
 using ItemsAdministration.Common.Infrastructure.Readers;
 using Microsoft.Extensions.Localization;
@@ -24,6 +25,15 @@ namespace ItemsAdministration.Common.Infrastructure.Hosting.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    public static IServiceCollection AddMapper(this IServiceCollection services, Assembly[] assemblies)
+    {
+        var mapperConfig = new MapperConfiguration(mc => mc.AddMaps(assemblies));
+        var mapper = mapperConfig.CreateMapper();
+        services.AddSingleton(mapper);
+
+        return services;
+    }
+
     public static IServiceCollection AddExceptionHandling(this IServiceCollection services)
     {
         services.AddSingleton<IExceptionResponseFormatterFactory, ExceptionResponseFormatterFactory>();
