@@ -1,7 +1,10 @@
 {
   "ItemCodeMinMaxRange": "Kod musi zawierać od {CodeMinLength} do {CodeMaxLength} znaków.",
   "ItemNameMinMaxRange": "Nazwa musi zawierać od {NameMinLength} do {NameMaxLength} znaków.",
+  "ItemNotFound": "Nie znaleziono produktu o identyfikatorze: '{Id}'",
+  "ItemAlreadyExist": "Produkt o kodzie: {ItemCode} już istnieje.",
+  "ItemColorNotFound": "Nie znaleziono koloru o nazwie: {ColorName}", 
   "ColorNameMinMaxRange": "Kolor musi zawierać od {NameMinLength} do {NameMaxLength} znaków.",
-  "ColorNotFound": "Nie znaleziono koloru o identyfikatorze: '{Id}'." 
+  "ColorNotFound": "Nie znaleziono koloru o identyfikatorze: '{Id}'.",
   "ColorAlreadyExist": "Kolor o nazwie {ColorName} już istnieje." 
 }
