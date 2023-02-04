@@ -10,8 +10,12 @@ public abstract class BaseGuidAggregateConfiguration<TEntity> : IEntityTypeConfi
     public virtual void Configure(EntityTypeBuilder<TEntity> builder)
     {
         builder.HasKey(e => e.Id);
+
         builder.Property(e => e.Version)
-            .IsRequired()
-            .IsConcurrencyToken();
+               .IsRequired()
+               .IsConcurrencyToken();
+
+        builder.Property(e => e.CreatedAt)
+               .IsRequired();
     }
 }
