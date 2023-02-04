@@ -5,12 +5,12 @@ namespace ItemsAdministration.Common.Shared.Exceptions;
 [Serializable]
 public abstract class BaseLocalizedException : Exception
 {
-    protected BaseLocalizedException(string code, object? messageParameter = null)
+    protected BaseLocalizedException(string prefixCode, object? messageParameter = null)
     {
-        Code = code;
+        PrefixCode = prefixCode;
         MessageParameter = messageParameter;
     }
 
-    public string Code { get; }
+    public string PrefixCode { get; }
     public object? MessageParameter { get; }
 }

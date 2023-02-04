@@ -18,10 +18,10 @@ internal abstract class BaseLocalizedExceptionResponseFormatter<TException> : Ba
 
     protected override IEnumerable<ErrorResponseDescription> GetErrorDescriptions(TException exception)
     {
-        var message = LocalizationService.GetLocalizedString(exception.Code).Value;
+        var message = LocalizationService.GetLocalizedString(exception.PrefixCode).Value;
         if (exception.MessageParameter is null)
         {
-            yield return new ErrorResponseDescription(exception.Code, message);
+            yield return new ErrorResponseDescription(exception.PrefixCode, message);
         }
 
         var properties = exception.MessageParameter!
@@ -35,6 +35,6 @@ internal abstract class BaseLocalizedExceptionResponseFormatter<TException> : Ba
             message = message.Replace($"{{{property.Name}}}", value);
         }
 
-        yield return new ErrorResponseDescription(exception.Code, message);
+        yield return new ErrorResponseDescription(exception.PrefixCode, message);
     }
 }

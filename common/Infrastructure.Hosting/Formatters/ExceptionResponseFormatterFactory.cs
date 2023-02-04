@@ -3,6 +3,7 @@ using ItemsAdministration.Common.Infrastructure.Hosting.Localizations.Interfaces
 using ItemsAdministration.Common.Shared.Exceptions;
 using Microsoft.Extensions.Logging;
 using System;
+using ItemsAdministration.Common.Application.Abstractions.Exceptions;
 
 namespace ItemsAdministration.Common.Infrastructure.Hosting.Formatters;
 
@@ -16,6 +17,7 @@ public sealed class ExceptionResponseFormatterFactory : IExceptionResponseFormat
     public IExceptionResponseFormatter Create(Exception exception)
       => exception switch
       {
+          ObjectNotFoundException => new ObjectNotFoundExceptionResponseFormatter(GetLogger<ObjectNotFoundExceptionResponseFormatter>(), GetLocalizationService()),
           BaseLocalizedException => new LocalizedExceptionResponseFormatter(GetLogger<LocalizedExceptionResponseFormatter>(), GetLocalizationService()),
           BaseManyLocalizedException => new ManyLocalizedExceptionResponseFormatter(GetLogger<ManyLocalizedExceptionResponseFormatter>(), GetLocalizationService()),
           _ => new DefaultExceptionResponseFormatter(GetLogger<DefaultExceptionResponseFormatter>(), GetLocalizationService())
