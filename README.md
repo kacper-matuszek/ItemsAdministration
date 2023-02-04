@@ -2,7 +2,7 @@
 
 # ItemsAdministration
 
-**How to start the solution?**
+### How to start the solution?
 
 Start the infrastructure using Docker:
 ```
@@ -20,3 +20,7 @@ If you want run app in release mode use __build.ps1__ script:
 cd publish
 ./ItemsAdministration.WebHost.exe
 ```
+
+### Testing
+* __postgres-compose.yaml__ contains also pg admin container (http://localhost:5050). You can sign in using e-mail: __admin@admin.com__ and password: __root__. After that you should connect to database using user: __admin__ and password: __admin__
+* To properly test the role you need to generate a token, which is generated using the __auth__ endpoint
