@@ -2,6 +2,7 @@
 using ItemsAdministration.Common.Domain.Validators;
 using ItemsAdministration.Domain.Consts;
 using ItemsAdministration.Domain.Models;
+using ItemsAdministration.Domain.Validators.Sub;
 
 namespace ItemsAdministration.Domain.Validators;
 
@@ -24,5 +25,8 @@ public class ItemValidator : DomainValidator<Item>
             .Length(NameMinLength, NameMaxLength)
             .WithErrorCode(ItemValidationCodes.ItemNameMinMaxRange)
             .WithState(_ => new { NameMinLength, NameMaxLength });
+
+        RuleFor(e => e.Color)
+            .SetValidator(new ColorNameValidator());
     }
 }

@@ -27,6 +27,7 @@ public class Item : BaseGuidAggregate
     public void Update(UpdateItemDto dto)
     {
         Persist(dto);
+        new ItemValidator().ValidateAndThrow(this);
     }
 
     private void Persist(IPersistItemDto dto)

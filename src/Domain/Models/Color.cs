@@ -1,5 +1,6 @@
 ﻿using System;
 using ItemsAdministration.Common.Domain.Models;
+using ItemsAdministration.Domain.Validators;
 
 namespace ItemsAdministration.Domain.Models;
 
@@ -10,6 +11,7 @@ public class Color : BaseGuidAggregate
         : base(Guid.NewGuid())
     {
         Name = name;
+        new ColorValidator().ValidateAndThrow(this);
     }
 
     private Color()
@@ -21,5 +23,6 @@ public class Color : BaseGuidAggregate
     public void Update(string name)
     {
         Name = name;
+        new ColorValidator().ValidateAndThrow(this);
     }
 }

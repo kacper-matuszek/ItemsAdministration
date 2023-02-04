@@ -1,4 +1,5 @@
 {
   "ItemCodeMinMaxRange": "Kod musi zawierać od {CodeMinLength} do {CodeMaxLength} znaków.",
-  "ItemNameMinMaxRange": "Nazwa musi zawierać od {NameMinLength} do {NameMaxLength} znaków."
+  "ItemNameMinMaxRange": "Nazwa musi zawierać od {NameMinLength} do {NameMaxLength} znaków.",
+  "ColorNameMinMaxRange": "Kolor musi zawierać od {NameMinLength} do {NameMaxLength} znaków." 
 }
