@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using ItemsAdministration.Application;
 using ItemsAdministration.Application.Abstractions;
+using ItemsAdministration.Application.Abstractions.Interfaces.Repositories;
 using ItemsAdministration.Common.Infrastructure.Hosting;
 using ItemsAdministration.Common.Infrastructure.Hosting.Extensions;
 using ItemsAdministration.Infrastructure.Api;
@@ -19,7 +20,7 @@ public class Startup : BaseStartup
 
     protected override Assembly ApiLayerAssembly => typeof(ApiAssemblyMarker).Assembly;
     protected override Assembly ApplicationLayerAssembly => typeof(ApplicationAssemblyMarker).Assembly;
-    protected override Assembly ApplicationAbstractionLayerAssembly => typeof(ApplicationAbstractionAssemblyMarker).Assembly;
+    protected override Assembly ApplicationAbstractionLayerAssembly => typeof(IItemRepository).Assembly;
 
     protected override void ConfigureServices(IServiceCollection services)
     {
