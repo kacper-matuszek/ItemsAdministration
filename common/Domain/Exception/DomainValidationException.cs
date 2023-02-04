@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ItemsAdministration.Common.Shared.Errors;
 using ItemsAdministration.Common.Shared.Exceptions;
 
 namespace ItemsAdministration.Common.Domain.Exception;

@@ -30,6 +30,7 @@ public abstract class BaseStartup
     protected abstract Assembly ApiLayerAssembly { get; }
     protected abstract Assembly ApplicationLayerAssembly { get; }
     protected abstract Assembly ApplicationAbstractionLayerAssembly { get; }
+    protected abstract Assembly ReadModelLayerAssembly { get; }
 
     public WebApplication Initialize()
     {
@@ -60,8 +61,9 @@ public abstract class BaseStartup
         services.AddControllers().AddApplicationPart(ApiLayerAssembly);
         services.AddCommonLocalization();
         services.AddExceptionHandling();
-        services.AddCqrs(new[] { ApplicationLayerAssembly, ApplicationAbstractionLayerAssembly });
-        services.AddMapper(new[] { ApiLayerAssembly });
+        services.AddCqrs(ApplicationLayerAssembly, ApplicationAbstractionLayerAssembly);
+        services.AddMapper(ApiLayerAssembly);
+        services.AddDapperReadModels(ReadModelLayerAssembly);
     }
 
     protected virtual void ConfigureApplication(WebApplication app)

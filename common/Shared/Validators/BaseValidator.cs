@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using ItemsAdministration.Common.Shared.Exceptions;
+using ItemsAdministration.Common.Shared.Errors;
 using System;
 using System.Linq;
 

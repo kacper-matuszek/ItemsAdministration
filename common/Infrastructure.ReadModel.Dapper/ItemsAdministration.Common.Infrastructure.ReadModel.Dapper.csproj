@@ -1,1 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk"/>
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <PackageReference Include="Dapper.SqlBuilder" Version="2.0.78" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Application.Abstractions\ItemsAdministration.Common.Application.Abstractions.csproj" />
+    <ProjectReference Include="..\Infrastructure.ReadModel\ItemsAdministration.Common.Infrastructure.ReadModel.csproj" />
+    <ProjectReference Include="..\Shared\ItemsAdministration.Common.Shared.csproj" />
+  </ItemGroup>
+</Project>

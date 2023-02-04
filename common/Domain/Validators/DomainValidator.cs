@@ -1,5 +1,5 @@
 ﻿using ItemsAdministration.Common.Domain.Exception;
-using ItemsAdministration.Common.Shared.Exceptions;
+using ItemsAdministration.Common.Shared.Errors;
 using ItemsAdministration.Common.Shared.Validators;
 
 namespace ItemsAdministration.Common.Domain.Validators;

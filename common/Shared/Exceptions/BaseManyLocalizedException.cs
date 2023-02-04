@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ItemsAdministration.Common.Shared.Errors;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 

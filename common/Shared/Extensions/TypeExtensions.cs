@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace ItemsAdministration.Common.Shared.Extensions;
 
-public static class TypExtensions
+public static class TypeExtensions
 {
     public static Type[] GetTypesBasedOnAttribute<TAttribute>(this Assembly assembly)
         where TAttribute : Attribute =>

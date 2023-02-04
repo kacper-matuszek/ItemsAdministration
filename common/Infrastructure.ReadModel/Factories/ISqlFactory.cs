@@ -1,5 +1,8 @@
-﻿namespace ItemsAdministration.Common.Infrastructure.ReadModel.Factories;
+﻿using System.Data;
 
-public interface ISqlFactory : IDatabaseConnectionFactory
+namespace ItemsAdministration.Common.Infrastructure.ReadModel.Factories;
+
+public interface ISqlFactory
 {
+    IDbConnection CreateDbConnection(string connectionString);
 }

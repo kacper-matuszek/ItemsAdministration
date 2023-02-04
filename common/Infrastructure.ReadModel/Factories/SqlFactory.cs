@@ -1,5 +1,15 @@
-﻿namespace ItemsAdministration.Common.Infrastructure.ReadModel.Factories;
+﻿using System.Data;
+using Npgsql;
 
-public partial class SqlFactory : ISqlFactory
+namespace ItemsAdministration.Common.Infrastructure.ReadModel.Factories;
+
+public class SqlFactory : ISqlFactory
 {
+    public IDbConnection CreateDbConnection(string connectionString)
+    {
+        var conn = new NpgsqlConnection(connectionString);
+        conn.Open();
+
+        return conn;
+    }
 }

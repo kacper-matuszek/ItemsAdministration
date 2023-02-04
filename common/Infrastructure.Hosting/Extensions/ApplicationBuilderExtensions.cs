@@ -9,9 +9,6 @@ namespace ItemsAdministration.Common.Infrastructure.Hosting.Extensions;
 
 public static class ApplicationBuilderExtensions
 {
-    public static IApplicationBuilder UseExceptionHandling(this IApplicationBuilder applicationBuilder) =>
-        applicationBuilder.UseMiddleware<ExceptionResponseMiddleware>();
-
     public static IApplicationBuilder UseDatabaseAutoMigration<TEfContext>(this IApplicationBuilder applicationBuilder)
         where TEfContext : DbContext
     {
@@ -30,4 +27,7 @@ public static class ApplicationBuilderExtensions
 
         return applicationBuilder;
     }
+
+    internal static IApplicationBuilder UseExceptionHandling(this IApplicationBuilder applicationBuilder) =>
+        applicationBuilder.UseMiddleware<ExceptionResponseMiddleware>();
 }

@@ -21,12 +21,27 @@ using ItemsAdministration.Common.Infrastructure.Hosting.Localizations;
 using ItemsAdministration.Common.Infrastructure.Hosting.Localizations.Interfaces;
 using ItemsAdministration.Common.Infrastructure.Hosting.Formatters.Interfaces;
 using ItemsAdministration.Common.Infrastructure.Hosting.Formatters;
+using ItemsAdministration.Common.Infrastructure.ReadModel;
+using ItemsAdministration.Common.Infrastructure.ReadModel.Factories;
 
 namespace ItemsAdministration.Common.Infrastructure.Hosting.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddPolishCulture(this IServiceCollection services)
+    public static IServiceCollection AddPostgres<TContext>(
+        this IServiceCollection services, IConfiguration configuration)
+        where TContext : DbContext
+    {
+        services.AddRepositories(typeof(TContext).Assembly);
+        services.AddPostgresDatabaseOptions(configuration);
+        services.AddDbContext<TContext>(opt => opt.ApplyPostgresOptions<TContext>(
+                                            configuration[$"{PostgresDatabaseOptions.SectionName}:{nameof(PostgresDatabaseOptions.ConnectionString)}"]));
+        // EF Core issue related to https://github.com/npgsql/efcore.pg/issues/2000
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        return services;
+    }
+
+    internal static IServiceCollection AddPolishCulture(this IServiceCollection services)
     {
         var cultureInfo = new CultureInfo("pl-PL");
         CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
@@ -35,7 +50,7 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddMapper(this IServiceCollection services, Assembly[] assemblies)
+    internal static IServiceCollection AddMapper(this IServiceCollection services, params Assembly[] assemblies)
     {
         var mapperConfig = new MapperConfiguration(mc => mc.AddMaps(assemblies));
         var mapper = mapperConfig.CreateMapper();
@@ -44,14 +59,14 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddExceptionHandling(this IServiceCollection services)
+    internal static IServiceCollection AddExceptionHandling(this IServiceCollection services)
     {
         services.AddSingleton<IExceptionResponseFormatterFactory, ExceptionResponseFormatterFactory>();
 
         return services;
     }
 
-    public static IServiceCollection AddCommonLocalization(this IServiceCollection services)
+    internal static IServiceCollection AddCommonLocalization(this IServiceCollection services)
     {
         services.AddTransient<IDictionaryJsonFileReader, DictionaryJsonFileReader>();
         services.AddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
@@ -75,7 +90,7 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddCqrs(this IServiceCollection services, Assembly[] assemblies)
+    internal static IServiceCollection AddCqrs(this IServiceCollection services, params Assembly[] assemblies)
     {
         const string appAssemblySuffix = "Application";
         const string appAbstractionsAssemblySuffix = "Application.Abstractions";
@@ -97,22 +112,35 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddPostgres<TContext>(
-        this IServiceCollection services, IConfiguration configuration)
-        where TContext : DbContext
+    internal static IServiceCollection AddDapperReadModels(this IServiceCollection services, params Assembly[] assemblies)
     {
-        services.AddRepositories(typeof(TContext).Assembly);
-        services.AddPostgresDatabaseOptions(configuration);
-        services.AddDbContext<TContext>(opt => opt.ApplyPostgresOptions<TContext>(
-                                            configuration[$"{PostgresDatabaseOptions.SectionName}:{nameof(PostgresDatabaseOptions.ConnectionString)}"]));
-        // EF Core issue related to https://github.com/npgsql/efcore.pg/issues/2000
-        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        const string readModelAssemblySuffix = "ReadModel";
+
+        var readModelAssemblies = assemblies.Select(a => new
+            {
+                AssemblyName = a.GetName().Name,
+                Assembly = a
+            }).Where(a => a.AssemblyName != null && a.AssemblyName.EndsWith(readModelAssemblySuffix))
+            .Select(a => a.Assembly)
+            .ToArray();
+
+        services.AddReadModels(readModelAssemblies);
+        services.AddScoped<ISqlFactory, SqlFactory>();
+
         return services;
     }
 
     private static IServiceCollection AddRepositories(this IServiceCollection services, params Assembly[] assemblies)
     {
         foreach (var (derivedType, interfaceType) in assemblies.SelectMany(t => t.GetDerivedTypesWithInterfaces<RepositoryAttribute>()))
+            services.AddScoped(interfaceType, derivedType);
+
+        return services;
+    }
+
+    private static IServiceCollection AddReadModels(this IServiceCollection services, params Assembly[] assemblies)
+    {
+        foreach (var (derivedType, interfaceType) in assemblies.SelectMany(t => t.GetDerivedTypesWithInterfaces<ReadModelAttribute>()))
             services.AddScoped(interfaceType, derivedType);
 
         return services;

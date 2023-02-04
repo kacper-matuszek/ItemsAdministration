@@ -1,6 +1,8 @@
-﻿namespace ItemsAdministration.Common.Infrastructure.Options;
+﻿using ItemsAdministration.Common.Infrastructure.ReadModel;
 
-public class PostgresDatabaseOptions
+namespace ItemsAdministration.Common.Infrastructure.Options;
+
+public class PostgresDatabaseOptions : IDatabaseOptions
 {
     public const string SectionName = "PostgresDatabase";
 
