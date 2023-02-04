@@ -1,5 +1,6 @@
 ﻿using ItemsAdministration.Common.Infrastructure.EF.Configurations;
 using ItemsAdministration.Domain.Models;
+using ItemsAdministration.Infrastructure.EF.PostgreSql.Seeds;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ItemsAdministration.Infrastructure.EF.PostgreSql.Configurations;
@@ -13,5 +14,7 @@ internal sealed class ColorConfiguration : BaseGuidAggregateConfiguration<Color>
         base.Configure(builder);
         builder.Property(e => e.Name)
             .HasMaxLength(NameMaxLength);
+
+        builder.HasData(ColorSeedData.Seed());
     }
 }
