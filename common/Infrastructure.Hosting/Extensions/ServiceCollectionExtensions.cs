@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using ItemsAdministration.Common.Application.Abstractions.Interfaces.Dispatchers;
@@ -25,6 +26,15 @@ namespace ItemsAdministration.Common.Infrastructure.Hosting.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    public static IServiceCollection AddPolishCulture(this IServiceCollection services)
+    {
+        var cultureInfo = new CultureInfo("pl-PL");
+        CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+        CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
+        return services;
+    }
+
     public static IServiceCollection AddMapper(this IServiceCollection services, Assembly[] assemblies)
     {
         var mapperConfig = new MapperConfiguration(mc => mc.AddMaps(assemblies));
@@ -81,7 +91,7 @@ public static class ServiceCollectionExtensions
         if (appAssemblies.Length == 0)
             throw new ArgumentException("Provided assemblies are incorrects. You must provide application and application abstractions assemblies.");
 
-        services.AddSingleton<IDispatcher, InMemoryDispatcher>();
+        services.AddScoped<IDispatcher, InMemoryDispatcher>();
         services.AddMediatR(appAssemblies);
 
         return services;

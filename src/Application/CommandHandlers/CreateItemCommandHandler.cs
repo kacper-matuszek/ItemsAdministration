@@ -28,7 +28,7 @@ public sealed class CreateItemCommandHandler : ICommandHandler<CreateItemCommand
             throw new ObjectAlreadyExistException(Names.Item, new { ItemCode = command.Dto.Code });
 
         var isColorExist = await _colorRepository.Any(c => c.Name == command.Dto.Color);
-        if (isColorExist)
+        if (!isColorExist)
             throw new ObjectNotFoundException(Names.ItemColor, new { ColorName = command.Dto.Color });
 
         var item = new Item(command.Dto);

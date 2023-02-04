@@ -25,9 +25,9 @@ public class ColorController : BaseController
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update(UpdateColorCommand request, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> Update(UpdateColorRequest request, CancellationToken cancellationToken = default)
     {
-        var command = Mapper.Map<CreateColorCommand>(request);
+        var command = Mapper.Map<UpdateColorCommand>(request);
         await Dispatcher.Send(command, cancellationToken);
         return Ok();
     }

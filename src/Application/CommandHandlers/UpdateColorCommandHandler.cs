@@ -22,6 +22,13 @@ public sealed class UpdateColorCommandHandler : ICommandHandler<UpdateColorComma
         if (color is null)
             throw new ObjectNotFoundException(Names.Color, new { command.Id });
 
+        if (color.Name != command.Name)
+        {
+            var isExistColorWithTheSameName = await _repository.Any(c => c.Name == command.Name);
+            if (isExistColorWithTheSameName)
+                throw new ObjectAlreadyExistException(Names.Color, new { ColorName = command.Name });
+        }
+
         color.Update(command.Name);
         await _repository.Update(color);
 

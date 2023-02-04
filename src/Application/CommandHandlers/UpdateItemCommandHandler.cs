@@ -26,10 +26,17 @@ public sealed class UpdateItemCommandHandler : ICommandHandler<UpdateItemCommand
         if (item is null)
             throw new ObjectNotFoundException(Names.Item, new { command.Id });
 
+        if (item.Code != command.Dto.Code)
+        {
+            var isExistItemWithTheSameCode = await _itemRepository.Any(i => i.Code == command.Dto.Code);
+            if (isExistItemWithTheSameCode)
+                throw new ObjectAlreadyExistException(Names.Item, new { ItemCode = command.Dto.Code });
+        }
+
         if (item.Color != command.Dto.Color)
         {
             var isColorExist = await _colorRepository.Any(c => c.Name == command.Dto.Color);
-            if (isColorExist)
+            if (!isColorExist)
                 throw new ObjectNotFoundException(Names.ItemColor, new { ColorName = command.Dto.Color });
         }
 

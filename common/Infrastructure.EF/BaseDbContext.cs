@@ -39,7 +39,7 @@ public abstract class BaseDbContext : DbContext
 
         foreach (var modifiedEntity in modifiedEntities)
         {
-            (modifiedEntity as IPersistable)?.OnPersist();
+            (modifiedEntity.Entity as IPersistable)?.OnPersist();
         }
     }
 }

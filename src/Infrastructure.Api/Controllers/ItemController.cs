@@ -25,9 +25,9 @@ public class ItemController : BaseController
     }
 
     [HttpPut]
-    public async Task<IActionResult> Update(UpdateItemCommand request, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> Update(UpdateItemRequest request, CancellationToken cancellationToken = default)
     {
-        var command = Mapper.Map<CreateItemCommand>(request);
+        var command = Mapper.Map<UpdateItemCommand>(request);
         await Dispatcher.Send(command, cancellationToken);
         return Ok();
     }

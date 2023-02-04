@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Globalization;
 using System.Reflection;
 using ItemsAdministration.Common.Infrastructure.Hosting.Extensions;
 using ItemsAdministration.Common.Infrastructure.Readers.Interfaces;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -52,6 +54,7 @@ public abstract class BaseStartup
 
     protected virtual void ConfigureServices(IServiceCollection services)
     {
+        services.AddPolishCulture();
         services.AddEndpointsApiExplorer();
         services.AddHttpContextAccessor();
         services.AddControllers().AddApplicationPart(ApiLayerAssembly);

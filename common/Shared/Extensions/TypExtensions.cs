@@ -24,7 +24,7 @@ public static class TypExtensions
             .ToArray();
 
     public static Type? GetImplementedInterface(this Type type)
-        => type.GetInterfaces().SingleOrDefault(t => t.Name == t.CreateInterfaceName());
+        => type.GetInterfaces().SingleOrDefault(t => t.Name == type.CreateInterfaceName());
 
     private static string CreateInterfaceName(this Type type)
         => $"I{type.Name}";
