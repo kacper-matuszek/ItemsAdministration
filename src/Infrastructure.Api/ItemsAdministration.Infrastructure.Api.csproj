@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\..\common\Infrastructure.Hosting\ItemsAdministration.Common.Infrastructure.Hosting.csproj" />
     <ProjectReference Include="..\Application.Abstractions\ItemsAdministration.Application.Abstractions.csproj" />

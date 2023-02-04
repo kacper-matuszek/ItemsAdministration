@@ -3,10 +3,10 @@ using ItemsAdministration.Application.Abstractions.Commands;
 using ItemsAdministration.Domain.Dtos;
 using ItemsAdministration.PublishedLanguage.Requests;
 
-namespace ItemsAdministration.Infrastructure.Api;
+namespace ItemsAdministration.Infrastructure.Api.Profiles;
 
 public class ItemProfile : Profile
-{                                  
+{
     public ItemProfile()
     {
         CreateMap<CreateItemRequest, CreateItemDto>();

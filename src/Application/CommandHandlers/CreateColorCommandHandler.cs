@@ -10,7 +10,7 @@ using MediatR;
 
 namespace ItemsAdministration.Application.CommandHandlers;
 
-public class CreateColorCommandHandler : ICommandHandler<CreateColorCommand>
+internal sealed class CreateColorCommandHandler : ICommandHandler<CreateColorCommand>
 {
     private readonly IColorRepository _repository;
 

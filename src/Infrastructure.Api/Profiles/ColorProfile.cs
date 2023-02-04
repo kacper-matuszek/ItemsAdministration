@@ -2,7 +2,7 @@
 using ItemsAdministration.Application.Abstractions.Commands;
 using ItemsAdministration.PublishedLanguage.Requests;
 
-namespace ItemsAdministration.Infrastructure.Api;
+namespace ItemsAdministration.Infrastructure.Api.Profiles;
 
 public class ColorProfile : Profile
 {

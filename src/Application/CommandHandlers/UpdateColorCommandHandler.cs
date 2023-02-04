@@ -9,7 +9,7 @@ using MediatR;
 
 namespace ItemsAdministration.Application.CommandHandlers;
 
-public sealed class UpdateColorCommandHandler : ICommandHandler<UpdateColorCommand>
+internal sealed class UpdateColorCommandHandler : ICommandHandler<UpdateColorCommand>
 {
     private readonly IColorRepository _repository;
 

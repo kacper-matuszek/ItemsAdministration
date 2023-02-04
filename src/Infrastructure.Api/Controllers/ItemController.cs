@@ -1,10 +1,13 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using ItemsAdministration.Application.Abstractions.Commands;
+using ItemsAdministration.Application.Abstractions.Queries;
 using ItemsAdministration.Common.Application.Abstractions.Interfaces.Dispatchers;
 using ItemsAdministration.Common.Infrastructure.Hosting;
 using ItemsAdministration.PublishedLanguage.Requests;
+using ItemsAdministration.PublishedLanguage.Response;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ItemsAdministration.Infrastructure.Api.Controllers;
@@ -31,4 +34,8 @@ public class ItemController : BaseController
         await Dispatcher.Send(command, cancellationToken);
         return Ok();
     }
+
+    [HttpGet]
+    public Task<ItemResponse> Get(Guid id, CancellationToken cancellationToken = default) => 
+        Dispatcher.Query(new GetItemQuery(id), cancellationToken);
 }
