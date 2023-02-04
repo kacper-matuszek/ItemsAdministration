@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using ItemsAdministration.Application;
-using ItemsAdministration.Application.Abstractions;
 using ItemsAdministration.Application.Abstractions.Interfaces.Repositories;
 using ItemsAdministration.Common.Infrastructure.Hosting;
 using ItemsAdministration.Common.Infrastructure.Hosting.Extensions;
@@ -26,7 +25,6 @@ public class Startup : BaseStartup
     {
         base.ConfigureServices(services);
         services.AddPostgres<ItemsAdministrationDbContext>(Configuration);
-
     }
 
     protected override void ConfigureApplication(WebApplication app)
