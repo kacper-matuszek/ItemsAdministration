@@ -2,5 +2,5 @@
 
 public static class ColorValidationCodes
 {
-    internal static string ColorNameMinMaxRange => ColorNameMinMaxRange;
+    internal static string ColorNameMinMaxRange => nameof(ColorNameMinMaxRange);
 }
