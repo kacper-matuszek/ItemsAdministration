@@ -5,7 +5,9 @@ using AutoMapper;
 using ItemsAdministration.Application.Abstractions.Commands;
 using ItemsAdministration.Application.Abstractions.Queries;
 using ItemsAdministration.Common.Application.Abstractions.Interfaces.Dispatchers;
+using ItemsAdministration.Common.Application.Abstractions.Lists;
 using ItemsAdministration.Common.Infrastructure.Hosting;
+using ItemsAdministration.Common.Shared.Responses;
 using ItemsAdministration.PublishedLanguage.Requests;
 using ItemsAdministration.PublishedLanguage.Response;
 using Microsoft.AspNetCore.Mvc;
@@ -38,4 +40,14 @@ public class ItemController : BaseController
     [HttpGet]
     public Task<ItemResponse> Get(Guid id, CancellationToken cancellationToken = default) => 
         Dispatcher.Query(new GetItemQuery(id), cancellationToken);
+
+    [HttpGet("pagination")]
+    public async Task<PaginatedListResponse<ItemResponse>> Get(
+        [FromQuery] GetPaginatedItemsRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var query = Mapper.Map<GetPaginatedItemsQuery>(request);
+        var items = await Dispatcher.Query(query, cancellationToken);
+        return Mapper.Map<PaginatedListResponse<ItemResponse>>(items);
+    }
 }

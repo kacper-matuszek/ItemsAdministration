@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\..\common\Infrastructure.ReadModel.Dapper\ItemsAdministration.Common.Infrastructure.ReadModel.Dapper.csproj" />
+    <ProjectReference Include="..\..\common\Infrastructure\ItemsAdministration.Common.Infrastructure.csproj" />
     <ProjectReference Include="..\Application.Abstractions\ItemsAdministration.Application.Abstractions.csproj" />
   </ItemGroup>
 

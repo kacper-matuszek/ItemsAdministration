@@ -27,10 +27,10 @@ public abstract class BaseSortableReadModel : BaseReadModel
     protected virtual SortingOrder DefaultSortingOrder => SortingOrder.Ascending;
     protected virtual IReadOnlyDictionary<string, string> SortingColumnNamesMap => new Dictionary<string, string>();
 
-    protected Task<PaginatedList<TListDto>> GetSimplePaginatedList<TPaginatedListQuery, TListDto>(
+    protected async Task<PaginatedList<TListDto>> GetSimplePaginatedList<TPaginatedListQuery, TListDto>(
         TPaginatedListQuery query,
         string listSqlQuery,
-        Action<TPaginatedListQuery, SqlBuilder> applyFiltering,
+        Action<TPaginatedListQuery, SqlBuilder>? applyFiltering,
         CancellationToken cancellationToken)
         where TPaginatedListQuery : PaginatedQuery
     {
@@ -39,24 +39,12 @@ public abstract class BaseSortableReadModel : BaseReadModel
             .AddSelectTotalCountQuery()
             .AddSelectAllFromCurrentPageQuery();
 
-        return GetPaginatedListWithElements<TPaginatedListQuery, TListDto>(
-            query, paginatedQueryBuilder, applyFiltering, (_, _) => { }, cancellationToken);
-    }
-
-    protected async Task<PaginatedList<TListDto>> GetPaginatedListWithElements<TPaginatedListQuery, TListDto>(
-        TPaginatedListQuery query,
-        PaginatedQueryBuilder paginatedQueryBuilder,
-        Action<TPaginatedListQuery, SqlBuilder> applyFiltering,
-        Action<SqlMapper.GridReader, IEnumerable<TListDto>> assignElements,
-        CancellationToken cancellationToken)
-        where TPaginatedListQuery : PaginatedQuery
-    {
         var sqlQuery = paginatedQueryBuilder.Build();
         var builder = new SqlBuilder();
         paginatedQueryBuilder.SqlParameters.AddDynamicParams(new { PageIndex = query.PageNumber - 1, query.PageNumber, query.PageSize });
         var template = builder.AddTemplate(sqlQuery, paginatedQueryBuilder.SqlParameters);
 
-        applyFiltering(query, builder);
+        applyFiltering?.Invoke(query, builder);
         ApplySorting(query.SortingOptions, builder);
 
         var commandDefinition = CreateCommandDefinition(template.RawSql, cancellationToken, template.Parameters);
@@ -67,7 +55,6 @@ public abstract class BaseSortableReadModel : BaseReadModel
         // This is a workaround. ReadSingleAsync<int> doesn't work (can't cast int64 to int 32), but ReadSingle<int> works perfectly
         var totalCount = (int)await multi.ReadSingleAsync<long>().ConfigureAwait(false);
         var items = (await multi.ReadAsync<TListDto>().ConfigureAwait(false)).ToList();
-        assignElements(multi, items);
         paginatedQueryBuilder.SqlParameters = new DynamicParameters();
 
         return new PaginatedList<TListDto>

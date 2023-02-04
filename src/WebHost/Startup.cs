@@ -21,7 +21,7 @@ public class Startup : BaseStartup
     protected override Assembly ApiLayerAssembly => typeof(ItemController).Assembly;
     protected override Assembly ApplicationLayerAssembly => typeof(CreateItemCommandHandler).Assembly;
     protected override Assembly ApplicationAbstractionLayerAssembly => typeof(IItemRepository).Assembly;
-    protected override Assembly ReadModelLayerAssembly => typeof(ReadModelAssemblyMarker).Assembly;
+    protected override Assembly ReadModelLayerAssembly => typeof(PaginatedItemsReadModel).Assembly;
 
     protected override void ConfigureServices(IServiceCollection services)
     {

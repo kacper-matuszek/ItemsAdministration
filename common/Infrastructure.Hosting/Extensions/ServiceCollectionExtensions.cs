@@ -52,7 +52,11 @@ public static class ServiceCollectionExtensions
 
     internal static IServiceCollection AddMapper(this IServiceCollection services, params Assembly[] assemblies)
     {
-        var mapperConfig = new MapperConfiguration(mc => mc.AddMaps(assemblies));
+        var mapperConfig = new MapperConfiguration(mc =>
+        {
+            mc.AddMaps(assemblies);
+            mc.AddProfile<QueryProfile>();
+        });
         var mapper = mapperConfig.CreateMapper();
         services.AddSingleton(mapper);
 
