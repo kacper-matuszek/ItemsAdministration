@@ -13,7 +13,10 @@ internal sealed class ColorConfiguration : BaseGuidAggregateConfiguration<Color>
     {
         base.Configure(builder);
         builder.Property(e => e.Name)
-            .HasMaxLength(NameMaxLength);
+               .HasMaxLength(NameMaxLength);
+
+        builder.HasIndex(e => e.Name)
+               .IsUnique();
 
         builder.HasData(ColorSeedData.Seed());
     }
