@@ -2,6 +2,7 @@
 using ItemsAdministration.Common.Domain.Models;
 using ItemsAdministration.Domain.Dtos;
 using ItemsAdministration.Domain.Dtos.Interfaces;
+using ItemsAdministration.Domain.Validators;
 
 namespace ItemsAdministration.Domain.Models;
 
@@ -11,6 +12,7 @@ public class Item : BaseGuidAggregate
         : base(Guid.NewGuid())
     {
         Persist(dto);
+        new ItemValidator().ValidateAndThrow(this);
     }
 
     private Item()
