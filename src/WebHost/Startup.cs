@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
-using ItemsAdministration.Application;
 using ItemsAdministration.Application.Abstractions.Interfaces.Repositories;
+using ItemsAdministration.Application.CommandHandlers;
 using ItemsAdministration.Common.Infrastructure.Hosting;
 using ItemsAdministration.Common.Infrastructure.Hosting.Extensions;
-using ItemsAdministration.Infrastructure.Api;
+using ItemsAdministration.Infrastructure.Api.Controllers;
 using ItemsAdministration.Infrastructure.EF.PostgreSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,8 +17,8 @@ public class Startup : BaseStartup
     {
     }
 
-    protected override Assembly ApiLayerAssembly => typeof(ApiAssemblyMarker).Assembly;
-    protected override Assembly ApplicationLayerAssembly => typeof(ApplicationAssemblyMarker).Assembly;
+    protected override Assembly ApiLayerAssembly => typeof(ItemController).Assembly;
+    protected override Assembly ApplicationLayerAssembly => typeof(CreateItemCommandHandler).Assembly;
     protected override Assembly ApplicationAbstractionLayerAssembly => typeof(IItemRepository).Assembly;
 
     protected override void ConfigureServices(IServiceCollection services)
