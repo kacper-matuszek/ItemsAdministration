@@ -64,6 +64,7 @@ public abstract class BaseStartup
         services.AddCqrs(ApplicationLayerAssembly, ApplicationAbstractionLayerAssembly);
         services.AddMapper(ApiLayerAssembly);
         services.AddDapperReadModels(ReadModelLayerAssembly);
+        services.AddJwtAuthenication(Configuration);
     }
 
     protected virtual void ConfigureApplication(WebApplication app)
@@ -78,6 +79,8 @@ public abstract class BaseStartup
         });
         app.UseExceptionHandling();
         app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.UseEndpoints(e => e.MapControllers());
         app.UseHttpsRedirection();
     }

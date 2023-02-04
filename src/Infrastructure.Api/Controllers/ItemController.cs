@@ -5,16 +5,18 @@ using AutoMapper;
 using ItemsAdministration.Application.Abstractions.Commands;
 using ItemsAdministration.Application.Abstractions.Queries;
 using ItemsAdministration.Common.Application.Abstractions.Interfaces.Dispatchers;
-using ItemsAdministration.Common.Application.Abstractions.Lists;
 using ItemsAdministration.Common.Infrastructure.Hosting;
 using ItemsAdministration.Common.Shared.Responses;
+using ItemsAdministration.Infrastructure.Api.Consts;
 using ItemsAdministration.PublishedLanguage.Requests;
 using ItemsAdministration.PublishedLanguage.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ItemsAdministration.Infrastructure.Api.Controllers;
 
 [ApiController]
+[Authorize(Roles = RoleNames.ItemsManagement)]
 [Route("items")]
 public class ItemController : BaseController
 {
@@ -38,10 +40,12 @@ public class ItemController : BaseController
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public Task<ItemResponse> Get(Guid id, CancellationToken cancellationToken = default) => 
         Dispatcher.Query(new GetItemQuery(id), cancellationToken);
 
     [HttpGet("pagination")]
+    [AllowAnonymous]
     public async Task<PaginatedListResponse<ItemResponse>> Get(
         [FromQuery] GetPaginatedItemsRequest request,
         CancellationToken cancellationToken = default)

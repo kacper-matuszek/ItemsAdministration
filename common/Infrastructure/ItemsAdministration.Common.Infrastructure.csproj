@@ -2,6 +2,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.9" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Application.Abstractions\ItemsAdministration.Common.Application.Abstractions.csproj" />

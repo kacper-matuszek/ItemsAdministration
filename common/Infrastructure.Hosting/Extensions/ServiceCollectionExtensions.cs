@@ -13,7 +13,9 @@ using MediatR;
 using ItemsAdministration.Common.Shared.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using System.Text;
 using AutoMapper;
+using ItemsAdministration.Common.Application.Abstractions.Interfaces.Providers;
 using ItemsAdministration.Common.Infrastructure.Readers.Interfaces;
 using ItemsAdministration.Common.Infrastructure.Readers;
 using Microsoft.Extensions.Localization;
@@ -21,8 +23,12 @@ using ItemsAdministration.Common.Infrastructure.Hosting.Localizations;
 using ItemsAdministration.Common.Infrastructure.Hosting.Localizations.Interfaces;
 using ItemsAdministration.Common.Infrastructure.Hosting.Formatters.Interfaces;
 using ItemsAdministration.Common.Infrastructure.Hosting.Formatters;
+using ItemsAdministration.Common.Infrastructure.Providers;
 using ItemsAdministration.Common.Infrastructure.ReadModel;
 using ItemsAdministration.Common.Infrastructure.ReadModel.Factories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ItemsAdministration.Common.Infrastructure.Hosting.Extensions;
 
@@ -38,6 +44,14 @@ public static class ServiceCollectionExtensions
                                             configuration[$"{PostgresDatabaseOptions.SectionName}:{nameof(PostgresDatabaseOptions.ConnectionString)}"]));
         // EF Core issue related to https://github.com/npgsql/efcore.pg/issues/2000
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        return services;
+    }
+
+    internal static IServiceCollection AddJwtAuthenication(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.Configure<AuthenticationOptions>(configuration.GetSection(AuthenticationOptions.SectionName));
+        services.AddScoped<IJwtTokenProvider, JwtTokenProvider>();
+        services.ConfigureJwtToken();
         return services;
     }
 
@@ -155,6 +169,25 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration)
     {
         services.Configure<PostgresDatabaseOptions>(configuration.GetSection(PostgresDatabaseOptions.SectionName));
+        return services;
+    }
+
+    private static IServiceCollection ConfigureJwtToken(this IServiceCollection services)
+    {
+        var authenication = services.BuildServiceProvider().GetRequiredService<IOptions<AuthenticationOptions>>().Value;
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(opt =>
+            {
+                opt.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenication.SecretKey)),
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidIssuer = authenication.Issuer
+                };
+            });
+
         return services;
     }
 }

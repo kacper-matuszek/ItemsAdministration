@@ -5,7 +5,6 @@ using AutoMapper;
 using ItemsAdministration.Application.Abstractions.Commands;
 using ItemsAdministration.Application.Abstractions.Queries;
 using ItemsAdministration.Common.Application.Abstractions.Interfaces.Dispatchers;
-using ItemsAdministration.Common.Application.Abstractions.Lists;
 using ItemsAdministration.Common.Infrastructure.Hosting;
 using ItemsAdministration.Common.Shared.Responses;
 using ItemsAdministration.PublishedLanguage.Requests;
