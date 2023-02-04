@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ItemsAdministration.Infrastructure.Api.Controllers;
 
 [ApiController]
-[Authorize(Roles = RoleNames.ItemsManagement)]
+[Authorize]
 [Route("items")]
 public class ItemController : BaseController
 {
@@ -24,6 +24,7 @@ public class ItemController : BaseController
         : base(dispatcher, mapper) { }
 
     [HttpPost]
+    [Authorize(Roles = RoleNames.ItemsManagement)]
     public async Task<IActionResult> Create(CreateItemRequest request, CancellationToken cancellationToken = default)
     {
         var command = Mapper.Map<CreateItemCommand>(request);
@@ -32,6 +33,7 @@ public class ItemController : BaseController
     }
 
     [HttpPut]
+    [Authorize(Roles = RoleNames.ItemsManagement)]
     public async Task<IActionResult> Update(UpdateItemRequest request, CancellationToken cancellationToken = default)
     {
         var command = Mapper.Map<UpdateItemCommand>(request);
@@ -40,12 +42,10 @@ public class ItemController : BaseController
     }
 
     [HttpGet]
-    [AllowAnonymous]
     public Task<ItemResponse> Get(Guid id, CancellationToken cancellationToken = default) => 
         Dispatcher.Query(new GetItemQuery(id), cancellationToken);
 
     [HttpGet("pagination")]
-    [AllowAnonymous]
     public async Task<PaginatedListResponse<ItemResponse>> Get(
         [FromQuery] GetPaginatedItemsRequest request,
         CancellationToken cancellationToken = default)

@@ -16,6 +16,6 @@ public class AuthController : ControllerBase
         _jwtTokenProvider = jwtTokenProvider;
 
     [HttpPost]
-    public string GenerateToken() => 
-        _jwtTokenProvider.Generate(Guid.NewGuid(), new []{ RoleNames.ItemsManagement });
+    public string GenerateToken([FromQuery] bool applyRole) => 
+        _jwtTokenProvider.Generate(Guid.NewGuid(), applyRole ? new []{ RoleNames.ItemsManagement } : Array.Empty<string>());
 }

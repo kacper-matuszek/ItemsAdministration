@@ -9,11 +9,13 @@ using ItemsAdministration.Common.Infrastructure.Hosting;
 using ItemsAdministration.Common.Shared.Responses;
 using ItemsAdministration.PublishedLanguage.Requests;
 using ItemsAdministration.PublishedLanguage.Response;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ItemsAdministration.Infrastructure.Api.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("colors")]
 public class ColorController : BaseController
 {
